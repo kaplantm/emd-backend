@@ -14,7 +14,19 @@ describe('CreditCardController', () => {
     controller = module.get<CreditCardController>(CreditCardController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('validate', () => {
+    it('should return an object with correct isValid and message properties for valid cards', () => {
+      const validateCreditCardDto = { cardNumber: '79927398713' };
+      const result = controller.create(validateCreditCardDto);
+
+      expect(result.isValid).toBeTruthy();
+    });
+    it('should return an object with correct isValid and message properties for invalid cards', () => {
+      const validateCreditCardDto = { cardNumber: '49927398717' };
+      const result = controller.create(validateCreditCardDto);
+
+      expect(result).toHaveProperty('isValid');
+      expect(result.isValid).toBeFalsy();
+    });
   });
 });
